@@ -1,4 +1,4 @@
-# DEV PHP-FPM Docker based (середовище розробника у контейнері Docker)
+# DEV PHP-FPM Docker based (серед.розробника PHP)
 
 ## How to use
 ### Just copy docker-compose.yml from dist example
