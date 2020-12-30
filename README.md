@@ -1,5 +1,5 @@
 # DEV PHP-FPM Docker based 
-# Cередовище розробника PHP)
+# Cередовище розробника PHP
 
 ## How to use
 ### Just copy docker-compose.yml from dist example
