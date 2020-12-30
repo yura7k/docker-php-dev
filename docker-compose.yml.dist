@@ -1,9 +1,52 @@
-version: "3.5"
+ersion: "3.5"
 
 services:
 
-  php:
-    build:
-      context: .
+  nginx:
+    image: nginx:latest
+    container_name: nginx-test
     ports:
-    - 127.0.0.1:9000:9000
+      - 127.0.0.1:80:80
+    environment:
+      - NGINX_HOST=test.com
+      - NGINX_PORT=80
+    volumes:
+      - ./app:/var/www/html
+      - ./configs/nginx:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - php-fpm
+      - mariadb
+
+  php-fpm:
+    build:
+      context: php-fpm
+    container_name: php-fpm
+    volumes:
+      - ./app:/var/www/html
+    ports:
+      - 9000:9000
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+    volumes:
+      - ./db/mariadb:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - 127.0.0.1:8080:80
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: $MYSQL_USER
+      PMA_PASSWORD: $MYSQL_ROOT_PASSWORD
