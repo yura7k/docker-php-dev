@@ -1,4 +1,4 @@
-# DEV PHP-FPM Docker based 
+# Docker-compose dev PHP-FPM based 
 # Cередовище розробника PHP
 
 ## How to use
